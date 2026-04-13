@@ -64,6 +64,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
     Timer placePipeTimer;
     boolean gameOver = false;
     double score = 0;
+    double highScore = 0;
 
     FlappyBird() {
         setPreferredSize(new Dimension(boardWidth, boardHeight));
@@ -133,15 +134,16 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 
         //score
         g.setColor(Color.white);
+        g.setFont(new Font("Arial", Font.BOLD, 30));
 
-        g.setFont(new Font("Arial", Font.PLAIN, 32));
-        if (gameOver) {
-            g.drawString("Game Over: " + String.valueOf((int) score), 10, 35);
-        }
-        else {
-            g.drawString(String.valueOf((int) score), 10, 35);
-        }
-        
+        // Current score on top left
+        g.drawString(String.valueOf((int) score), 15, 60);
+
+        // High score on top right
+        String highScoreText = "High Score: " + String.valueOf((int) highScore);
+        int textWidth = g.getFontMetrics().stringWidth(highScoreText);
+        g.drawString(highScoreText, boardWidth - textWidth - 15, 60);
+
 	}
 
     public void move() {
@@ -182,6 +184,10 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         move();
         repaint();
         if (gameOver) {
+            //update highscore if current score exceeds it
+            if (score > highScore) {
+                highScore = score;
+            }
             placePipeTimer.stop();
             gameLoop.stop();
         }
