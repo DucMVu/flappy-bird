@@ -1,0 +1,108 @@
+# Flappy Bird Project - .gitignore
+
+# Compiled Java files
+*.class
+*.jar
+*.war
+
+# Build directories
+bin/
+build/
+target/
+out/
+dist/
+
+# IDE specific files
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor backup files
+*~
+*.bak
+*.swp
+*.swo
+*#
+.#*
+
+# Maven
+dependency-reduced-pom.xml
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+releases/
+
+# Gradle
+.gradle/
+gradle-app.setting
+gradlew
+gradlew.bat
+
+# Misc
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache/
+*.log
+*.pid
+*.seed
+*.pid.lock
+.env
+.env.local
+
+# Documentation build artifacts
+docs/_build/
+site/
+
+# Node modules (if using Node for any tools)
+node_modules/
+
+# Python venv (if using Python tools)
+venv/
+env/
+ENV/
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Linux
+.directory
+
+# Windows
+$RECYCLE.BIN/
+
+# JetBrains specific
+*.hprof
+.idea/
+.idea_modules/
+
+# Keep these files
+!.gitkeep
+!.gitignore
+
