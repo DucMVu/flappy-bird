@@ -11,7 +11,10 @@ COPY . /app
 EXPOSE 8080
 
 # Compile the Java application
-RUN javac src/**/*.java
+RUN javac -d out $(find src -name "*.java")
+
+# Set the HEADLESS environment variable to true
+ENV HEADLESS=true
 
 # Command to run the application
-CMD ["java", "-cp", "src", "App"]
+CMD ["java", "-cp", "out", "src.App"]
