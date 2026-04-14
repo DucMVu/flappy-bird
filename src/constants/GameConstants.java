@@ -1,9 +1,5 @@
 package src.constants;
 
-/**
- * Central constants file for the Flappy Bird game.
- * Contains all configuration values for easy modification.
- */
 public class GameConstants {
     // Board dimensions
     public static final int BOARD_WIDTH = 360;

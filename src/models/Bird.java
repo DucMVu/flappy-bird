@@ -1,6 +1,5 @@
 package src.models;
 
-import javax.swing.ImageIcon;
 import java.awt.Image;
 
 /**
