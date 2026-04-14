@@ -17,6 +17,26 @@ import com.sun.net.httpserver.HttpExchange;
  */
 public class App {
     public static void main(String[] args) throws IOException {
+        if (isHeadlessEnvironment()) {
+            startHttpServer();
+        } else {
+            startGame();
+        }
+    }
+
+    private static boolean isHeadlessEnvironment() {
+        return System.getenv("HEADLESS") != null;
+    }
+
+    private static void startHttpServer() throws IOException {
+        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+        server.createContext("/", new RootHandler());
+        server.setExecutor(null); // creates a default executor
+        System.out.println("Server is listening on port 8080...");
+        server.start();
+    }
+
+    private static void startGame() {
         // Create the main game window
         JFrame frame = new JFrame(GameConstants.WINDOW_TITLE);
         frame.setSize(GameConstants.BOARD_WIDTH, GameConstants.BOARD_HEIGHT);
@@ -30,13 +50,6 @@ public class App {
         frame.pack();
         flappyBirdGame.requestFocus();
         frame.setVisible(true);
-
-        // Start HTTP server
-        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-        server.createContext("/", new RootHandler());
-        server.setExecutor(null); // creates a default executor
-        System.out.println("Server is listening on port 8080...");
-        server.start();
     }
 
     static class RootHandler implements HttpHandler {
