@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Properties;
 
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
@@ -28,12 +31,36 @@ public class App {
         return System.getenv("HEADLESS") != null;
     }
 
+    private static Properties loadProperties() {
+        Properties props = new Properties();
+        try {
+            props.load(Files.newInputStream(Paths.get("application.properties")));
+        } catch (Exception e) {
+            System.out.println("Could not load application.properties, using defaults");
+        }
+        return props;
+    }
+
+    private static int getServerPort() {
+        Properties props = loadProperties();
+        String portProperty = props.getProperty("server.port", "${PORT:8080}");
+
+        // Handle property placeholder syntax ${PORT:8080}
+        if (portProperty.contains("${PORT:")) {
+            String defaultPort = portProperty.replaceAll(".*\\$\\{PORT:(\\d+)}.*", "$1");
+            return Integer.parseInt(System.getenv().getOrDefault("PORT", defaultPort));
+        }
+
+        // Handle direct port number
+        return Integer.parseInt(portProperty);
+    }
+
     private static void startHttpServer() throws IOException {
-        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
+        int port = getServerPort();
         HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", port), 0);
         server.createContext("/", new RootHandler());
         server.setExecutor(null); // creates a default executor
-        System.out.println("Server is listening on port 8080...");
+        System.out.println("Server is listening on port " + port + "...");
         server.start();
     }
 
